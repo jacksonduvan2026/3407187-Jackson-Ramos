@@ -1,26 +1,25 @@
-/* ============================================
-   CSS Variables for Theming
-   ============================================ */
 :root {
-  --bg-primary: #f5f7fa;
-  --bg-secondary: #ffffff;
-  --text-primary: #2d3748;
-  --text-secondary: #4a5568;
-  --accent: #d90000;
-  --accent-hover: #3182ce;
-  --border: #e2e8f0;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --success: #48bb78;
+  --bg-primary: #e8f4fd;
+  --bg-secondary: #d0ecfa;
+  --text-primary: #1a3a5c;
+  --text-secondary: #2e6da4;
+  --accent: #4daee8;
+  --accent-hover: #2a8fd4;
+  --border: #b8dff5;
+  --shadow: rgba(77, 174, 232, 0.18);
+  --success: #82c9a0;
+  --accent-secondary: #a8d8f0;
+  --bg-highlight: #d0ecfa;
   --transition: 0.3s ease;
 }
 
 [data-theme="dark"] {
-  --bg-primary: #1a202c;
-  --bg-secondary: #2d3748;
-  --text-primary: #f7fafc;
-  --text-secondary: #e2e8f0;
-  --border: #4a5568;
-  --shadow: rgba(0, 0, 0, 0.3);
+  --bg-primary: #0d1f33;
+  --bg-secondary: #1a3a5c;
+  --text-primary: #e8f4fd;
+  --text-secondary: #a8d8f0;
+  --border: #2e6da4;
+  --shadow: rgba(0, 0, 0, 0.35);
 }
 
 /* ============================================
@@ -92,13 +91,14 @@ body {
    Business Card
    ============================================ */
 .card {
-  background: var(--bg-secondary);
+  background: var(--bg-secondary);   /* Azul suave en vez de blanco */
   border-radius: 16px;
   box-shadow: 0 4px 20px var(--shadow);
   overflow: hidden;
   width: 100%;
   max-width: 600px;
   transition: all var(--transition);
+  border: 1.5px solid var(--border);
 }
 
 .card:hover {
@@ -109,7 +109,7 @@ body {
    Card Header
    ============================================ */
 .card-header {
-  background: linear-gradient(135deg, var(--accent) 0%, #667eea 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #1a6fbf 100%);
   padding: 2rem;
   text-align: center;
   color: white;
@@ -154,6 +154,7 @@ body {
 .card-section {
   padding: 1.5rem 2rem;
   border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);   /* Azul suave en todas las secciones */
 }
 
 .card-section:last-child {
@@ -185,6 +186,10 @@ body {
   align-items: center;
   gap: 0.75rem;
   color: var(--text-secondary);
+  background: var(--bg-primary);     /* Azul más claro para destacar */
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
 }
 
 .icon {
@@ -202,7 +207,7 @@ body {
 }
 
 .skill-item {
-  background: var(--bg-primary);
+  background: var(--bg-primary);     /* Azul claro */
   padding: 1rem;
   border-radius: 8px;
   border: 1px solid var(--border);
@@ -239,7 +244,7 @@ body {
 
 .skill-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent), #667eea);
+  background: linear-gradient(90deg, var(--accent), #1a6fbf);
   transition: width 0.5s ease;
 }
 

@@ -1,331 +1,179 @@
-# 📦 Proyecto Semana 02: Gestor de Colección
-
-> **🎯 ÚNICO ENTREGABLE**: Este proyecto es el **único entregable obligatorio** para aprobar la semana.
-
-## 🏛️ Política de Dominios Únicos
-
-**Tu dominio fue asignado por el instructor al inicio del trimestre.** Este proyecto debe implementarse completamente dentro del contexto de tu dominio asignado.
-
-### ¿Por qué dominios únicos?
-
-- Previene copia entre compañeros
-- Fomenta implementaciones originales
-- Desarrolla capacidad de abstracción
-- Aplica conceptos generales a contextos específicos
+## 👕 Baby Clothes Store
+## Gestor de Ropa Infantil — Semana 02
+**Autor:** Jackson Duvan Ramos Rodriguez
+**📍 Bogotá, Colombia**
 
 ---
 
-## 🎯 Objetivos del Proyecto
+## ¿De qué trata mi dominio?
 
-Construir una aplicación completa de gestión de colección que consolide todos los conceptos aprendidos en Week-02:
+Mi dominio es una tienda de ropa infantil llamada **Baby Clothes Store**. La aplicación funciona como un **gestor de inventario de prendas para niños**, donde se pueden registrar, consultar, actualizar y eliminar prendas del catálogo.
 
-- ✅ Spread & Rest operators
-- ✅ Default parameters
-- ✅ Array methods (map, filter, reduce, find, etc.)
-- ✅ Object enhancements
-- ✅ Manipulación del DOM
-- ✅ LocalStorage para persistencia
-- ✅ Inmutabilidad y programación funcional
+Este tipo de aplicaciones existen en el mundo real en tiendas físicas y e-commerce de moda infantil, donde es clave tener control del inventario por tipo de prenda, talla y disponibilidad de stock.
 
 ---
 
-## 📋 Descripción
-
-Aplicación web para gestionar una colección de elementos de tu dominio asignado con las siguientes características:
-
-### Funcionalidades Principales
-
-1. **Crear elementos** con propiedades específicas de tu dominio
-2. **Listar elementos** con filtros (todos, activos, inactivos)
-3. **Editar elementos** existentes
-4. **Eliminar elementos**
-5. **Marcar como activo/inactivo** (o estado equivalente en tu dominio)
-6. **Filtrar** por categoría y prioridad/nivel
-7. **Buscar** elementos por texto
-8. **Estadísticas** (total, activos, inactivos, por categoría)
-9. **Persistencia** en LocalStorage
-
-### Características Técnicas
-
-- **Sin frameworks**: JavaScript puro (ES2023)
-- **Inmutabilidad**: Nunca mutar el estado directamente
-- **Array methods**: Uso intensivo de map, filter, reduce
-- **Spread/Rest**: Para copiar y actualizar objetos/arrays
-- **Modular**: Código organizado en funciones puras
-
----
-
-## 💡 Ejemplos de Adaptación por Dominio
-
-> **⚠️ IMPORTANTE**: Estos son ejemplos ilustrativos. Usa el dominio que te asignó tu instructor.
-
-| Concepto Genérico | Ejemplo: Planetario 🔭 | Ejemplo: Acuario 🐠 |
-|-------------------|------------------------|---------------------|
-| **Elemento** | Cuerpo celeste | Especie marina |
-| **Propiedades** | nombre, tipo, distancia, magnitud | nombre, tipo, tanque, cantidad |
-| **Categorías** | planeta, estrella, asteroide, cometa | pez, mamífero, invertebrado, anfibio |
-| **Estado activo** | Visible esta noche | En exhibición |
-| **Prioridad/Nivel** | Brillo (alta/media/baja) | Peligrosidad (alta/media/baja) |
-| **Estadísticas** | Por tipo, por visibilidad | Por tanque, por tipo |
-
----
-
-## 🏗️ Estructura del Proyecto
+## Estructura de archivos
 
 ```
-3-proyecto/
-├── README.md           # Este archivo
-├── starter/
-│   ├── index.html      # HTML inicial
-│   ├── styles.css      # Estilos base
-│   └── script.js       # Código inicial con TODOs
+week-02/
+└── starter/
+    ├── index.html      → Estructura HTML de la aplicación
+    ├── styles.css      → Estilos visuales (paleta azul infantil)
+    └── scripts.js      → Lógica JavaScript (problema)
 └── solution/
-    └── script.js       # Referencia (no copiar)
+    └── scripts.js      → Lógica JavaScript (solución)
 ```
 
 ---
 
-## 📝 Modelo de Datos
+## Entidad principal: Prenda
 
-### Estructura Genérica del Elemento
+En la plantilla genérica la entidad se llamaba "Elemento". La reemplacé por **Prenda**, que representa una pieza de ropa del catálogo infantil.
+
+Cada prenda tiene estas propiedades:
+
+| Propiedad | Tipo | Descripción |
+|-----------|------|-------------|
+| `name` | String | Nombre de la prenda (ej. "Pijama Osito") |
+| `description` | String | Descripción, material y características |
+| `category` | String | Tipo de prenda (camisa, pantalón, zapato, etc.) |
+| `priority` | String | Nivel de stock: bajo / medio / alto |
+| `talla` | String | Talla de la prenda (4, 6, 8, 10, 12...) |
+| `active` | Boolean | Si la prenda está disponible o agotada |
+
+---
+
+## Categorías del dominio (`CATEGORIES`)
+
+Reemplacé las categorías genéricas por los tipos de prenda más comunes en una tienda infantil:
 
 ```javascript
-// Adapta este modelo a tu dominio
-{
-  id: 1,                      // Número único (Date.now())
-  name: "...",                // String - nombre del elemento
-  description: "...",         // String (opcional)
-  active: true,               // Boolean - estado activo/inactivo
-  priority: "high",           // "low" | "medium" | "high"
-  category: "...",            // Categoría específica de tu dominio
-  createdAt: "2024-01-15",    // String (ISO Date)
-  updatedAt: null,            // String | null
-
-  // Propiedades específicas de tu dominio:
-  // Planetario: magnitude, distance, constellation
-  // Acuario: tankNumber, population, feedingSchedule
-}
-```
-
----
-
-## 🔧 Funciones a Implementar
-
-### 1. Estado y Persistencia
-
-| Función | Descripción |
-|---------|-------------|
-| `loadItems()` | Carga elementos desde LocalStorage |
-| `saveItems(items)` | Guarda elementos en LocalStorage |
-| `getInitialState()` | Retorna estado inicial |
-
-### 2. CRUD Básico
-
-| Función | Descripción |
-|---------|-------------|
-| `createItem(itemData)` | Crea nuevo elemento con spread operator |
-| `updateItem(id, updates)` | Actualiza elemento usando map |
-| `deleteItem(id)` | Elimina elemento usando filter |
-| `toggleItemActive(id)` | Alterna estado activo/inactivo |
-
-### 3. Filtros y Búsqueda
-
-| Función | Descripción |
-|---------|-------------|
-| `filterByStatus(items, status)` | Filtra por estado (all/active/inactive) |
-| `filterByCategory(items, category)` | Filtra por categoría |
-| `filterByPriority(items, priority)` | Filtra por prioridad |
-| `searchItems(items, query)` | Busca en nombre y descripción |
-| `applyFilters(items, filters)` | Aplica todos los filtros encadenados |
-
-### 4. Estadísticas
-
-| Función | Descripción |
-|---------|-------------|
-| `getStats(items)` | Calcula estadísticas usando reduce |
-| `getItemsByCategory(items)` | Agrupa por categoría |
-
-### 5. Renderizado
-
-| Función | Descripción |
-|---------|-------------|
-| `renderItems(items)` | Renderiza lista usando map + template literals |
-| `renderStats(stats)` | Renderiza estadísticas |
-| `renderItem(item)` | Renderiza elemento individual |
-
----
-
-## 🎨 Interfaz de Usuario
-
-### Secciones Requeridas
-
-1. **Header**: Título adaptado a tu dominio y estadísticas rápidas
-2. **Formulario**: Crear/editar elementos con campos de tu dominio
-3. **Filtros**: Por estado, categoría, prioridad + búsqueda
-4. **Lista**: Elementos renderizados con información relevante
-5. **Stats**: Resumen de estadísticas por categoría
-
-### Estados Visuales Sugeridos
-
-- Elementos inactivos: Opacidad reducida
-- Prioridades: Colores diferentes (rojo/amarillo/verde)
-- Categorías: Badges con emojis de tu dominio
-
----
-
-## ✅ Criterios de Evaluación
-
-### Funcionalidad (40 puntos)
-
-- [ ] Crear elementos con todos los campos (10pts)
-- [ ] Editar elementos existentes (8pts)
-- [ ] Eliminar elementos (5pts)
-- [ ] Marcar como activo/inactivo (5pts)
-- [ ] Filtros funcionales (7pts)
-- [ ] Búsqueda funcional (5pts)
-
-### Código (30 puntos)
-
-- [ ] Uso correcto de spread/rest (8pts)
-- [ ] Array methods apropiados (10pts)
-- [ ] Inmutabilidad mantenida (7pts)
-- [ ] Código limpio y organizado (5pts)
-
-### Persistencia y UI (30 puntos)
-
-- [ ] LocalStorage funcionando (10pts)
-- [ ] Estadísticas correctas (10pts)
-- [ ] Interfaz coherente con el dominio (10pts)
-
-**Total: 100 puntos**
-**Mínimo para aprobar: 70 puntos**
-
----
-
-## 🚀 Cómo Empezar
-
-### 1. Define tu Modelo de Datos
-
-Primero, adapta el modelo genérico a tu dominio:
-
-```javascript
-// EJEMPLO Planetario (NO es un dominio asignable)
-const celestialBody = {
-  id: Date.now(),
-  name: "Júpiter",
-  description: "El gigante gaseoso más grande del sistema solar",
-  active: true,           // Visible esta noche
-  priority: "high",       // Brillo: alto
-  category: "planet",     // Tipo: planeta
-  // Propiedades específicas:
-  magnitude: -2.5,
-  distance: "628 millones km",
-  constellation: "Piscis"
+const CATEGORIES = {
+  // TODO: Define las categorías de tu dominio
+     category1: { name: 'calzado', emoji: '👟' },
+     category2: { name: 'accesorios', emoji: '👜' },
+     category3: { name: 'bebes', emoji: '🍼' },
+     category4: { name: 'niños', emoji: '🧢' },
+     category5: { name: 'niñas', emoji: '🎀' },
+     
 };
 ```
 
-### 2. Completa las Funciones
+---
 
-Abre `starter/script.js` y completa las funciones marcadas con `// TODO:`.
+## Nivel de stock (antes "Prioridad")
 
-### 3. Orden Recomendado
+El campo `priority` de la plantilla lo usé para representar el **nivel de stock** de cada prenda:
 
-1. Definir estructura de datos de tu dominio
-2. Implementar `createItem()` y `renderItem()`
-3. Conectar el formulario
-4. Implementar `loadItems()` y `saveItems()`
-5. Añadir toggle activo/inactivo y eliminar
-6. Implementar filtros y búsqueda
-7. Calcular y mostrar estadísticas
-8. Añadir edición de elementos
+```javascript
+const PRIORITIES = {
+  high:   { name: 'Alto',  color: '#82c9a0' },  // 🟢 Verde  — bastante inventario
+  medium: { name: 'Medio', color: '#f59e0b' },  // 🟡 Amarillo — reabastecer pronto
+  low:    { name: 'Bajo',  color: '#ef4444' },  // 🔴 Rojo  — urgente reabastecer
+};
+```
+
+El color del borde izquierdo de cada tarjeta cambia según el nivel de stock, dando una señal visual inmediata a quien gestiona la tienda.
 
 ---
 
-## 💡 Pistas y Consejos
+## Diseño visual (`styles.css`)
 
-### Inmutabilidad
+El diseño usa una **paleta de azules suaves y pasteles**, pensada para una tienda de ropa infantil:
 
-```javascript
-// ❌ MAL: Mutar array directamente
-items.push(newItem);
+- **Fondo general:** Gradiente de azul claro `#4daee8` a azul oscuro `#1a6fbf`
+- **Tarjetas:** Azul suave `#e8f4fd` con borde `#b8dff5`
+- **Items del inventario:** Azul highlight `#d0ecfa`
+- **Botones:** Azul medio `#4daee8`
+- **Textos:** Azul marino oscuro `#1a3a5c` para alta legibilidad
 
-// ✅ BIEN: Crear nuevo array con spread
-const newItems = [...items, newItem];
-```
+Esta paleta reemplazó el fondo morado/oscuro original para dar una identidad más amigable y adecuada para el público infantil.
 
-### Actualizar Elemento
+---
 
-```javascript
-// Usa map para actualizar sin mutar
-const updated = items.map(item =>
-  item.id === id ? { ...item, active: !item.active } : item
-);
-```
+## Estadísticas específicas del dominio
 
-### Eliminar Elemento
+En `getStats()` agregué cálculos relevantes para una tienda de ropa:
 
 ```javascript
-// Usa filter para eliminar sin mutar
-const filtered = items.filter(item => item.id !== id);
-```
+// Total de prendas registradas
+const totalPrendas = items.length;
 
-### Estadísticas con Reduce
+// Prendas disponibles vs agotadas
+const disponibles = items.filter(item => item.active).length;
+const agotadas    = items.filter(item => !item.active).length;
 
-```javascript
-// Contar por categoría
-const byCategory = items.reduce((acc, item) => {
-  acc[item.category] = (acc[item.category] ?? 0) + 1;
+// Conteo por tipo de prenda
+const porCategoria = items.reduce((acc, item) => {
+  acc[item.category] = (acc[item.category] || 0) + 1;
   return acc;
 }, {});
 ```
 
 ---
 
-## 🎓 Conceptos Aplicados
+## Persistencia con `localStorage`
 
-| Concepto | Uso en el Proyecto |
-|----------|-------------------|
-| **Spread Operator** | Copiar arrays `[...items]`, copiar objetos `{ ...item }` |
-| **Rest Parameters** | Funciones con argumentos variables |
-| **Array.map()** | Transformar elementos para renderizar |
-| **Array.filter()** | Filtrar por estado, categoría, búsqueda |
-| **Array.reduce()** | Calcular estadísticas y agrupar |
-| **Array.find()** | Encontrar elemento por ID |
-| **Default Parameters** | `filterByStatus(items, status = 'all')` |
-| **Object Enhancements** | Property shorthand, computed properties |
+Los datos se guardan en el navegador con una clave específica del dominio:
+
+```javascript
+localStorage.getItem('babyClothesItems')
+localStorage.setItem('babyClothesItems', JSON.stringify(itemsToSave))
+```
 
 ---
 
-## 📚 Recursos
+## Características ES2023 utilizadas
 
-- [MDN - LocalStorage](https://developer.mozilla.org/es/docs/Web/API/Window/localStorage)
-- [MDN - Métodos de Array](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array)
-- [JavaScript.info - Métodos de Array](https://javascript.info/array-methods)
-
----
-
-## ⏱️ Tiempo Estimado
-
-- **Definir modelo de datos**: 20 minutos
-- **Implementación básica**: 1.5 horas
-- **Filtros y búsqueda**: 30 minutos
-- **Estadísticas**: 20 minutos
-- **Refinamiento y testing**: 20 minutos
-
-**Total: ~3 horas**
+| Característica | Dónde la usé |
+|----------------|-------------|
+| **Spread operator** `...` | `createItem()` para copiar objetos sin mutarlos |
+| **Default parameters** | `getStats(items = [])`, `applyFilters(filters = {})` |
+| **`Array.map()`** | `updateItem()`, `toggleItemActive()`, `renderItems()` |
+| **`Array.filter()`** | `deleteItem()`, `clearInactive()`, filtros por tipo y stock |
+| **`Array.reduce()`** | `getStats()` para totales por categoría y nivel de stock |
+| **`Array.find()`** | `handleItemEdit()` para buscar la prenda a editar |
+| **Destructuring** | `applyFilters()` y `renderItem()` para extraer propiedades |
+| **Template literals** | Todo el HTML dinámico en `renderItem()` y `renderStats()` |
+| **Operador `??`** | `loadItems()`, valores por defecto en `createItem()` |
+| **Optional chaining `?.`** | `CATEGORIES[category]?.name`, `CATEGORIES[category]?.emoji` |
 
 ---
 
-## 📋 Entregables
+## Inmutabilidad del estado
 
-1. **Código funcional** adaptado a tu dominio asignado
-2. **README personal** explicando tu implementación específica
-3. **Capturas de pantalla** de la aplicación funcionando
-4. **Todo el código debe usar**:
-   - Nomenclatura técnica en inglés
-   - Comentarios en español
-   - Sintaxis ES2023 exclusivamente
+Nunca muto el array `items` directamente. Siempre creo arrays nuevos:
+
+```javascript
+// ✅ Correcto — creo un array nuevo
+const newItems = [...items, newItem];
+
+// ✅ Correcto — map devuelve un array nuevo
+const updated = items.map(i => i.id === id ? { ...i, ...changes } : i);
+
+// ❌ Nunca hago esto
+items.push(newItem);
+items[0].name = 'otro nombre';
+```
 
 ---
 
-_Proyecto Week-02 - JavaScript Moderno Bootcamp_
+## Checklist de entrega
+
+- [x] Categorías adaptadas al dominio de ropa infantil
+- [x] Campos adicionales: talla, nivel de stock
+- [x] CRUD completo: crear, leer, actualizar, eliminar
+- [x] Toggle disponible / agotado por prenda
+- [x] Filtros por disponibilidad, tipo de prenda y nivel de stock
+- [x] Búsqueda en tiempo real por nombre y descripción
+- [x] Estadísticas del inventario con totales por categoría
+- [x] Persistencia con localStorage
+- [x] Inmutabilidad del estado en todo el código
+- [x] Comentarios en español, nomenclatura técnica en inglés
+- [x] Paleta de colores azul suave adaptada para ropa infantil
+- [x] Uso de: spread, map, filter, reduce, find, destructuring, template literals
+
+---
+
+*Hecho con 💙 por Jackson — Baby Clothes Store · Bogotá, Colombia*

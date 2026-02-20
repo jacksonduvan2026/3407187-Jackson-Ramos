@@ -1,240 +1,106 @@
-# 🚀 Semana 2: Operadores y Métodos Modernos de Arrays
+👕 Baby Clothes Store
+Gestor de Ropa Infantil — Semana 02
+Autor: Jackson Duvan Ramos Rodriguez
+📍 Bogotá, Colombia
 
-## 🎯 Objetivos de Aprendizaje
+¿De qué trata mi dominio?
+Mi dominio es una tienda de ropa infantil llamada Baby Clothes Store. La aplicación funciona como un gestor de inventario de prendas para niños, donde se pueden registrar, consultar, actualizar y eliminar prendas del catálogo.
+Este tipo de aplicaciones existen en el mundo real en tiendas físicas y e-commerce de moda infantil, donde es clave tener control del inventario por tipo de prenda, talla y disponibilidad de stock.
 
-Al finalizar esta semana, serás capaz de:
-
-- ✅ Utilizar el spread operator para copiar y combinar arrays/objetos
-- ✅ Aplicar rest parameters en funciones para argumentos variables
-- ✅ Trabajar con default parameters avanzados
-- ✅ Dominar métodos de arrays modernos (map, filter, reduce)
-- ✅ Usar shorthand properties y methods en objetos
-- ✅ Crear computed property names dinámicamente
-- ✅ Encadenar métodos de arrays para transformaciones complejas
-- ✅ Usar `Array.prototype.at()` para índices negativos (ES2022)
-- ✅ Aplicar `Object.hasOwn()` para verificar propiedades propias (ES2022)
-
----
-
-## 📚 Requisitos Previos
-
-- ✅ Haber completado la Semana 1
-- ✅ Dominar let/const, template literals y arrow functions
-- ✅ Comprender destructuring básico
-- ✅ Conocer la sintaxis de objetos y arrays
-
----
-
-## 🗂️ Estructura de la Semana
-
-```
+Estructura de archivos
 week-02/
-├── README.md                    # Este archivo
-├── rubrica-evaluacion.md        # Criterios de evaluación
-├── 0-assets/                    # Diagramas y recursos visuales
-│   ├── 01-spread-operator.svg
-│   ├── 02-rest-parameters.svg
-│   ├── 03-array-methods.svg
-│   ├── 04-map-filter-reduce.svg
-│   ├── 05-object-enhancements.svg
-│   └── 06-metodos-es2022.svg
-├── 1-teoria/                    # Material teórico
-│   ├── 01-spread-operator.md
-│   ├── 02-rest-parameters.md
-│   ├── 03-default-parameters.md
-│   ├── 04-array-methods.md
-│   ├── 05-object-enhancements.md
-│   └── 06-metodos-es2022.md
-├── 2-practicas/                 # Ejercicios guiados
-│   ├── ejercicio-01-spread-rest/
-│   ├── ejercicio-02-array-methods/
-│   ├── ejercicio-03-map-filter/
-│   ├── ejercicio-04-reduce/
-│   └── ejercicio-05-metodos-es2022/
-├── 3-proyecto/                  # Proyecto semanal
-│   └── gestor-tareas/
-├── 4-recursos/                  # Material adicional
-│   ├── ebooks-free/
-│   ├── videografia/
-│   └── webgrafia/
-└── 5-glosario/                  # Términos clave
-    └── README.md
-```
+└── starter/
+    ├── index.html      → Estructura HTML de la aplicación
+    ├── styles.css      → Estilos visuales (paleta azul infantil)
+    └── scripts.js      → Lógica JavaScript (problema)
+└── solution/
+    └── scripts.js      → Lógica JavaScript (solución)
 
----
+Entidad principal: Prenda
+En la plantilla genérica la entidad se llamaba "Elemento". La reemplacé por Prenda, que representa una pieza de ropa del catálogo infantil.
+Cada prenda tiene estas propiedades:
+PropiedadTipoDescripciónnameStringNombre de la prenda (ej. "Pijama Osito")descriptionStringDescripción, material y característicascategoryStringTipo de prenda (camisa, pantalón, zapato, etc.)priorityStringNivel de stock: bajo / medio / altotallaStringTalla de la prenda (4, 6, 8, 10, 12...)activeBooleanSi la prenda está disponible o agotada
 
-## 📝 Contenidos
+Categorías del dominio (CATEGORIES)
+Reemplacé las categorías genéricas por los tipos de prenda más comunes en una tienda infantil:
+javascriptconst CATEGORIES = {
+  shirt:   { name: 'Camiseta',  emoji: '👕' },
+  pants:   { name: 'Pantalón',  emoji: '👖' },
+  shoes:   { name: 'Calzado',   emoji: '👟' },
+  dress:   { name: 'Vestido',   emoji: '👗' },
+  jacket:  { name: 'Chaqueta',  emoji: '🧥' },
+  other:   { name: 'Otro',      emoji: '📌' },
+};
 
-### 1️⃣ Teoría
+Nivel de stock (antes "Prioridad")
+El campo priority de la plantilla lo usé para representar el nivel de stock de cada prenda:
+javascriptconst PRIORITIES = {
+  high:   { name: 'Alto',  color: '#82c9a0' },  // 🟢 Verde  — bastante inventario
+  medium: { name: 'Medio', color: '#f59e0b' },  // 🟡 Amarillo — reabastecer pronto
+  low:    { name: 'Bajo',  color: '#ef4444' },  // 🔴 Rojo  — urgente reabastecer
+};
+El color del borde izquierdo de cada tarjeta cambia según el nivel de stock, dando una señal visual inmediata a quien gestiona la tienda.
 
-#### [01. Spread Operator](1-teoria/01-spread-operator.md)
-- Copiar arrays y objetos
-- Combinar múltiples arrays/objetos
-- Pasar arrays como argumentos
-- Casos de uso prácticos
+Diseño visual (styles.css)
+El diseño usa una paleta de azules suaves y pasteles, pensada para una tienda de ropa infantil:
 
-#### [02. Rest Parameters](1-teoria/02-rest-parameters.md)
-- Diferencia entre spread y rest
-- Funciones con argumentos variables
-- Combinar con parámetros normales
-- Patrones comunes
+Fondo general: Gradiente de azul claro #4daee8 a azul oscuro #1a6fbf
+Tarjetas: Azul suave #e8f4fd con borde #b8dff5
+Items del inventario: Azul highlight #d0ecfa
+Botones: Azul medio #4daee8
+Textos: Azul marino oscuro #1a3a5c para alta legibilidad
 
-#### [03. Default Parameters](1-teoria/03-default-parameters.md)
-- Valores por defecto avanzados
-- Expresiones como valores por defecto
-- Parámetros que dependen de otros
-- Mejores prácticas
+Esta paleta reemplazó el fondo morado/oscuro original para dar una identidad más amigable y adecuada para el público infantil.
 
-#### [04. Array Methods](1-teoria/04-array-methods.md)
-- map(): Transformar arrays
-- filter(): Filtrar elementos
-- reduce(): Reducir a un valor
-- find(), findIndex(), some(), every()
-- Encadenar métodos
+Estadísticas específicas del dominio
+En getStats() agregué cálculos relevantes para una tienda de ropa:
+javascript// Total de prendas registradas
+const totalPrendas = items.length;
 
-#### [05. Object Enhancements](1-teoria/05-object-enhancements.md)
-- Property shorthand
-- Method shorthand
-- Computed property names
-- Object.assign()
-- Object.keys(), values(), entries()
+// Prendas disponibles vs agotadas
+const disponibles = items.filter(item => item.active).length;
+const agotadas    = items.filter(item => !item.active).length;
 
-#### [06. Métodos ES2022](1-teoria/06-metodos-es2022.md)
-- `Array.prototype.at()` para índices negativos
-- `Object.hasOwn()` vs `hasOwnProperty()`
-- Propiedades propias vs heredadas
-- Casos de uso prácticos
+// Conteo por tipo de prenda
+const porCategoria = items.reduce((acc, item) => {
+  acc[item.category] = (acc[item.category] || 0) + 1;
+  return acc;
+}, {});
 
----
+Persistencia con localStorage
+Los datos se guardan en el navegador con una clave específica del dominio:
+javascriptlocalStorage.getItem('babyClothesItems')
+localStorage.setItem('babyClothesItems', JSON.stringify(itemsToSave))
 
-### 2️⃣ Prácticas
+Características ES2023 utilizadas
+CaracterísticaDónde la uséSpread operator ...createItem() para copiar objetos sin mutarlosDefault parametersgetStats(items = []), applyFilters(filters = {})Array.map()updateItem(), toggleItemActive(), renderItems()Array.filter()deleteItem(), clearInactive(), filtros por tipo y stockArray.reduce()getStats() para totales por categoría y nivel de stockArray.find()handleItemEdit() para buscar la prenda a editarDestructuringapplyFilters() y renderItem() para extraer propiedadesTemplate literalsTodo el HTML dinámico en renderItem() y renderStats()Operador ??loadItems(), valores por defecto en createItem()Optional chaining ?.CATEGORIES[category]?.name, CATEGORIES[category]?.emoji
 
-#### [Ejercicio 01: Spread y Rest](2-practicas/ejercicio-01-spread-rest/)
-Practicar spread operator y rest parameters en diferentes contextos.
+Inmutabilidad del estado
+Nunca muto el array items directamente. Siempre creo arrays nuevos:
+javascript// ✅ Correcto — creo un array nuevo
+const newItems = [...items, newItem];
 
-#### [Ejercicio 02: Array Methods Básicos](2-practicas/ejercicio-02-array-methods/)
-Dominar map(), filter() y métodos de búsqueda.
+// ✅ Correcto — map devuelve un array nuevo
+const updated = items.map(i => i.id === id ? { ...i, ...changes } : i);
 
-#### [Ejercicio 03: Map y Filter Avanzado](2-practicas/ejercicio-03-map-filter/)
-Transformaciones y filtrados complejos de datos.
+// ❌ Nunca hago esto
+items.push(newItem);
+items[0].name = 'otro nombre';
 
-#### [Ejercicio 04: Reduce Patterns](2-practicas/ejercicio-04-reduce/)
-Resolver problemas con reduce y encadenar métodos.
+Checklist de entrega
 
-#### [Ejercicio 05: Métodos ES2022](2-practicas/ejercicio-05-metodos-es2022/)
-Practicar `at()` y `Object.hasOwn()` en escenarios reales.
+ Categorías adaptadas al dominio de ropa infantil
+ Campos adicionales: talla, nivel de stock
+ CRUD completo: crear, leer, actualizar, eliminar
+ Toggle disponible / agotado por prenda
+ Filtros por disponibilidad, tipo de prenda y nivel de stock
+ Búsqueda en tiempo real por nombre y descripción
+ Estadísticas del inventario con totales por categoría
+ Persistencia con localStorage
+ Inmutabilidad del estado en todo el código
+ Comentarios en español, nomenclatura técnica en inglés
+ Paleta de colores azul suave adaptada para ropa infantil
+ Uso de: spread, map, filter, reduce, find, destructuring, template literals
 
----
 
-### 3️⃣ Proyecto: Gestor de Tareas
-
-**[Ver Proyecto Completo](3-proyecto/)**
-
-Aplicación de gestión de tareas que utiliza:
-- Spread/Rest para manipulación de datos
-- Array methods para filtrado y transformación
-- Object enhancements para código limpio
-- Default parameters para configuración
-- Encadenamiento de métodos
-
----
-
-## ⏱️ Distribución del Tiempo (8 horas)
-
-| Actividad     | Tiempo | Descripción                        |
-| ------------- | ------ | ---------------------------------- |
-| **Teoría**    | 2.5h   | Lectura de los 5 archivos teóricos |
-| **Prácticas** | 3h     | Completar 4 ejercicios guiados     |
-| **Proyecto**  | 2h     | Gestor de tareas interactivo       |
-| **Recursos**  | 0.5h   | Revisión de material adicional     |
-
----
-
-## 📌 Entregables
-
-### 📦 Proyecto (100%)
-
-El **único entregable** para esta semana es el proyecto:
-
-- [ ] **Proyecto "Gestor de Tareas" funcional**
-- [ ] Código usando ES2023 correctamente (spread, rest, array methods)
-- [ ] README del proyecto documentado
-- [ ] Código limpio y bien comentado en inglés
-- [ ] Uso correcto de map, filter, reduce
-- [ ] Despliegue funcional (opcional)
-
-> **Nota**: Los ejercicios prácticos y la teoría son materiales de aprendizaje para prepararte para el proyecto, pero no se entregan de forma separada. El proyecto debe demostrar tu dominio de todos los conceptos aprendidos.
-
----
-
-## 🎯 Temas Clave
-
-- **Spread Operator** (`...`): Expandir elementos
-- **Rest Parameters**: Agrupar argumentos
-- **Default Parameters**: Valores por defecto
-- **map()**: Transformar cada elemento
-- **filter()**: Seleccionar elementos
-- **reduce()**: Reducir a un valor
-- **Property Shorthand**: `{ name }` en vez de `{ name: name }`
-- **Method Shorthand**: `{ method() {} }` en vez de `{ method: function() {} }`
-
----
-
-## 📚 Recursos Destacados
-
-### Lectura Esencial
-- [MDN - Spread syntax](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
-- [MDN - Rest parameters](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/rest_parameters)
-- [MDN - Array methods](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array)
-
-### Videos Recomendados
-- JavaScript Array Methods - Traversy Media
-- Spread Operator Explained - Web Dev Simplified
-- Reduce Method Tutorial - Fun Fun Function
-
----
-
-## ✅ Criterios de Éxito
-
-Para completar exitosamente esta semana:
-
-- [ ] Entender la diferencia entre spread y rest
-- [ ] Usar array methods con confianza
-- [ ] Dominar map, filter, reduce
-- [ ] Aplicar object enhancements naturalmente
-- [ ] Practicar con los ejercicios guiados (no se entregan)
-- [ ] **Entregar el proyecto funcional** ⭐ (único entregable)
-- [ ] Alcanzar mínimo 70% en la evaluación del proyecto
-
----
-
-## 🔗 Navegación
-
-- [← Semana 01: Introducción a ES2023](../week-01/README.md)
-- [→ Semana 03: Próximamente](#)
-- [↑ Volver al inicio del bootcamp](../../README.md)
-
----
-
-## 💡 Consejos para Esta Semana
-
-1. **Practica con datos reales**: Usa arrays de objetos que simulen datos de API
-2. **Encadena métodos**: Combina map, filter y reduce
-3. **Consola siempre**: Usa `console.log()` para ver resultados intermedios
-4. **Performance**: map/filter son más legibles que bucles for
-5. **Immutability**: Spread crea copias, no muta originales
-
----
-
-## 🎓 Conceptos Avanzados (Opcional)
-
-Si terminas antes, explora:
-- Array.from() para crear arrays
-- Array.flat() para aplanar arrays anidados
-- Object.fromEntries() para convertir entries a objeto
-- Composición de funciones con reduce
-- Transducers (concepto avanzado)
-
----
-
-_Semana 2 de 28 - JavaScript Moderno Bootcamp_
+Hecho con 💙 por Jackson — Baby Clothes Store · Bogotá, Colombia
